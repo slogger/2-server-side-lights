@@ -11,8 +11,8 @@ var config = {
         yellow : 2000,
         red : 3000,
         tram : {
-          arrival : 2000,
-          passage : 13000,
+          arrival : 3000,
+          passage : 15000,
         }
     },
     order : ['Green', 'Yellow', 'Red']
@@ -20,6 +20,7 @@ var config = {
 
 var tramStatus = false;
 var tramInterval = 50000;
+
 // Создаем светофор
 var trafic = new TraficLight(config);
 
