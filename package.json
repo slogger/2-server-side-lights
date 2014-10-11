@@ -1,0 +1,19 @@
+{
+  "name": "2-server-side-lights",
+  "author": "Maxim Syrykh (@sllgr)",
+  "description": "",
+  "main": "server.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/slogger/1-lights.git"
+  },
+  "bugs": {
+    "url": "https://github.com/slogger/1-lights/issues"
+  },
+  "dependencies": {
+    "express": "^4.9.6",
+    "jscs": "~1.6.2",
+    "jshint": "~2.5.6",
+    "request": "^2.45.0"
+  }
+}
