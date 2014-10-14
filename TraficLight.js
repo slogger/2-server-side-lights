@@ -84,11 +84,9 @@ var TraficLight = function(config) {
      */
   this.getCycleTime = function() {
       var time = 0;
-      _config.order.map(
-        function(color){
-          time += _config.timeout[ color.toLowerCase() ];
-        }
-      );
+      _config.order.forEach(function(color) {
+        time += _config.timeout[ color.toLowerCase() ];
+      });
       return time;
   };
 
