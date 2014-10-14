@@ -58,7 +58,8 @@ var server = app.listen(3000, function() {
 // Каждые 'tramInterval' мсек запускаем трамвай
 setInterval(function() {
     tramStatus = true;
-    eventEmitter.on('restore', function() {
-        tramStatus = !tramStatus;
-    });
 }, tramInterval);
+
+eventEmitter.on('restore', function() {
+    tramStatus = !tramStatus;
+});

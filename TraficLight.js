@@ -41,7 +41,6 @@ var TraficLight = function(config) {
       var numberColors = _config.order.length;
       var index = _config.order.indexOf(this.current.color);
       var nextColor = _config.order[ (++index % numberColors) ];
-
       var timeout = _config.timeout[ nextColor.toLowerCase() ];
       this.switch(nextColor, timeout);
   };
