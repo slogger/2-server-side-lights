@@ -1,0 +1,81 @@
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <!-- Рисуем три кружка -->
+  <circle cx="150" cy="150" r="50" id="Red" fill="#34495e"/>
+  <circle cx="150" cy="260" r="50" id="Yellow" fill="#34495e"/>
+  <circle cx="150" cy="370" r="50" id="Green" fill="#34495e"/>
+  <!-- Добавляем магии -->
+  <script type="text/javascript"><![CDATA[
+  var colors = {
+      Red : '#e74c3c',
+      Yellow : '#f1c40f',
+      Green : '#2ecc71'
+  }
+  var current = {
+      color : 'Red'
+  };
+
+  // Создаем объект умеющий в AJAX-запросы, кроссплатформенно
+  var ajax = {};
+  ajax.x = function() {
+      if(typeof XMLHttpRequest !== 'undefined') {
+          return new XMLHttpRequest();
+      }
+      var versions = [
+          "MSXML2.XmlHttp.5.0",
+          "MSXML2.XmlHttp.4.0",
+          "MSXML2.XmlHttp.3.0",
+          "MSXML2.XmlHttp.2.0",
+          "Microsoft.XmlHttp"
+      ];
+
+      var xhr;
+      for(var i = 0; i < versions.length; i++) {
+          try {
+              xhr = new ActiveXObject(versions[i]);
+              break;
+          } catch (e) {
+          }
+      }
+      return xhr;
+  };
+
+  ajax.send = function(url, callback, method, data, sync) {
+      var x = ajax.x();
+      x.open(method, url, sync);
+      x.onreadystatechange = function() {
+          if(x.readyState == 4) {
+              callback(x.responseText);
+          }
+      };
+      if(method == 'POST') {
+          x.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+      }
+      x.send(data);
+  };
+
+  ajax.get = function(url, data, callback, sync) {
+      var query = [];
+      for(var key in data) {
+          query.push(encodeURIComponent(key) + '=' + encodeURIComponent(data[key]));
+      }
+      ajax.send(url + '?' + query.join('&'), callback, 'GET', null, sync);
+  };
+
+  var intervalId = setInterval(function() {
+      ajax.get("http://localhost:3000/state", {}, function(data) {
+          var res = JSON.parse(data);
+          switchColor(res.state);
+      });
+  }, 0);
+
+  var switchColor = function(color) {
+      if (current.color != color) {
+          current = document.getElementById(current.color);
+          current.setAttribute('fill', '#34495e');
+          current.color = color;
+          next = document.getElementById(color);
+          next.setAttribute('fill', colors[''+color]);
+      }
+  }
+  ]]></script>
+</svg>
