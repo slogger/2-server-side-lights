@@ -1,5 +1,10 @@
-<svg version="1.1" xmlns="http://www.w3.org/2000/svg">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" style="
+    background: url('bg.png');
+    background-size: contain;
+">
   <!-- Рисуем три кружка -->
+  <rect width="20" height="350" fill="#7f8c8d" x="140" y="420"/>
+  <rect width="150" height="350" fill="#000000" x="75" y="85" ry="50" rx="50"/>
   <circle cx="150" cy="150" r="50" id="Red" fill="#34495e"/>
   <circle cx="150" cy="260" r="50" id="Yellow" fill="#34495e"/>
   <circle cx="150" cy="370" r="50" id="Green" fill="#34495e"/>
