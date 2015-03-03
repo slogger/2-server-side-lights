@@ -43,7 +43,10 @@ app.get('/', function(req, res) {
 });
 
 app.get('/state', function(req, res) {
-    res.json({ 'state' : trafic.state() });
+    res.json({
+      'state' : trafic.state(),
+      'lasttime' : trafic.lastTime()
+    });
 });
 
 app.get('/tramIsComing', function(req, res) {

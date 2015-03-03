@@ -89,7 +89,14 @@ var TraficLight = function(config) {
       });
       return time;
   };
-
+    /**
+     * @return {number} Кол-во мсек которое осталось гореть цвету светофора
+     */
+  this.lastTime = function() {
+      var currentTime = new Date() - this.current.startTime;
+      var delta = this.current.timeout - currentTime;
+      return this.current.timeout - currentTime;
+  };
     /**
      * Запуск светофора
      *

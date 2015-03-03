@@ -1,15 +1,38 @@
 <svg version="1.1" xmlns="http://www.w3.org/2000/svg" style="
     background: url('bg.png');
-    background-size: contain;
+    background-size: cover;
 ">
   <!-- Рисуем три кружка -->
   <rect width="20" height="350" fill="#7f8c8d" x="140" y="420"/>
   <rect width="150" height="350" fill="#000000" x="75" y="85" ry="50" rx="50"/>
-  <circle cx="150" cy="150" r="50" id="Red" fill="#34495e"/>
-  <circle cx="150" cy="260" r="50" id="Yellow" fill="#34495e"/>
-  <circle cx="150" cy="370" r="50" id="Green" fill="#34495e"/>
+  <circle cx="150" cy="150" r="50" id="Red" fill="#34495e"  style="transition: fill 0.3s linear;"/>
+  <circle cx="150" cy="260" r="50" id="Yellow" fill="#34495e" style="transition: fill 0.3s linear;"/>
+  <circle cx="150" cy="370" r="50" id="Green" fill="#34495e" style="transition: fill 0.3s linear;"/>
+  <!-- <rect width="150" height="100" fill="#000000" x="75" y="485" ry="50" rx="50"/> -->
+  <text x="120" y="150"
+        font-size="55" fill="black"
+        style="font-family='Exo 2', sans-serif">
+    {counter}
+  </text>
+  <rect width="300" height="200" id="tram" fill="#e67e22" x="-300" y="550" ry="50" rx="50">
+      <animate id="tramAnim" attributeName="x" from="-250" to="1500" begin="indefinite" dur="15s" fill="freezy"/>
+  </rect>
   <!-- Добавляем магии -->
   <script type="text/javascript"><![CDATA[
+  // Загрузчик шрифтов
+  WebFontConfig = {
+    google: { families: [ 'Exo+2::latin' ] }
+  };
+  (function() {
+    var wf = document.createElement('script');
+    wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+      '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+    wf.type = 'text/javascript';
+    wf.async = 'true';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(wf, s);
+  })();
+
   var colors = {
       Red : '#e74c3c',
       Yellow : '#f1c40f',
@@ -67,11 +90,35 @@
   };
 
   var intervalId = setInterval(function() {
-      ajax.get("http://localhost:3000/state", {}, function(data) {
+      // var checker = true;
+      var color = null;
+      ajax.get("/state", {}, function(data) {
           var res = JSON.parse(data);
-          switchColor(res.state);
+          color = res.state
+          switchColor(color);
+          updateTimer(res.lasttime, color)
       });
+      ajax.get("/tramiscoming", {}, function(res) {
+          if (res == 'true') {
+              setTimeout(function() {
+                startAnimate(color)
+              }, 3000)
+          }
+      })
   }, 0);
+  var tramAnim = null;
+  var startAnimate = function() {
+      document.getElementById("tramAnim").beginElement();
+  }
+
+  var animate = function() {
+      var tram  = document.getElementById('tram');
+      var x = tram.getAttribute('x')
+      if (x >= screen.width) {
+          clearInterval(tramAnim);
+      }
+      tram.setAttribute('x', parseFloat(x)+0.365)
+  }
 
   var switchColor = function(color) {
       if (current.color != color) {
@@ -81,6 +128,22 @@
           next = document.getElementById(color);
           next.setAttribute('fill', colors[''+color]);
       }
+  }
+
+  var updateTimer = function(lastTime, color) {
+      var colorsOffset = {
+          Red : '170',
+          Yellow : '280',
+          Green : '390'
+      }
+      var rest = (lastTime / 1000).toString().split('.')[0];
+      var counter = document.getElementsByTagName('text')[0];
+      if (rest.length == 1) {
+        counter.textContent = '0'+rest;
+      } else {
+        counter.textContent = rest;
+      }
+      counter.setAttribute('y', colorsOffset[''+color]);
   }
   ]]></script>
 </svg>
