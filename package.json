@@ -8,7 +8,8 @@
     "url": "git://github.com/slogger/1-lights.git"
   },
   "scripts": {
-    "test": "eslint *.js www/*.js && istanbul cover node_modules/.bin/_mocha test/**/*.test.js --report html",
+    "test": "eslint *.js www/*.js && mocha test/**/*.test.js",
+    "coverage": "istanbul cover node_modules/.bin/_mocha test/**/*.test.js --report html",
     "start": "node server.js",
     "heroku-prebuild": "node -v"
   },
@@ -16,6 +17,7 @@
     "url": "https://github.com/slogger/1-lights/issues"
   },
   "dependencies": {
+    "bunyan": "^1.8.1",
     "express": "^4.9.6",
     "request": "^2.45.0"
   },
