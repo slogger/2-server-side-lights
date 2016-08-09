@@ -17,7 +17,9 @@ var TramHandler = function(trafic, options, eventEmitter) {
         ].join('');
         var ctx = this;
         request(url, function(error, response, body) {
-            if (body === 'true') {
+            if (error) {
+                throw (error);
+            } else if (body === 'true') {
                 eventEmitter.emit('tram', ctx);
             }
         });
