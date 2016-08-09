@@ -1,0 +1,13 @@
+{
+  "extends": "stylelint-config-primer",
+  "rules": {
+    "selector-no-qualifying-type": null,
+    "no-unsupported-browser-features": [null,{
+        "browser": ["last 2 versions"]
+    }],
+    "selector-class-pattern": null,
+    "property-no-vendor-prefix": null,
+    "declaration-property-value-blacklist": null
+  },
+  "browser": "last 2 versions"
+}

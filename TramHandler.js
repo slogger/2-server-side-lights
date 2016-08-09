@@ -5,9 +5,23 @@ var request = require("request");
  *
  * @param {TraficLight} trafic - экземпляр светофора
  * @param {Object} options - урл с которого слушаем событие
- * @param {EventEmitter} eventEmitter
+ * @param {EventEmitter} eventEmitter - eventEmitter
  */
-TramHandler = function(trafic, options, eventEmitter) {
+var TramHandler = function(trafic, options, eventEmitter) {
+    var sendRequest = function() {
+        var url = [
+            'http://',
+            options.host,
+            options.port ? ':' + options.port : '',
+            options.path
+        ].join('');
+        var ctx = this;
+        request(url, function(error, response, body) {
+            if (body === 'true') {
+                eventEmitter.emit('tram', ctx);
+            }
+        });
+    };
 
     /**
      * Проверка едет ли трамвай
@@ -17,25 +31,10 @@ TramHandler = function(trafic, options, eventEmitter) {
     this.tramChecker = function() {
         this._checkerId = setInterval(function() {
             sendRequest();
-        }.bind(this), 1000);
+        }, 1000);
     };
 
     (this.tramChecker());
-
-    sendRequest = function() {
-        var url =  [
-            'http://',
-            options.host,
-            options.port ? ':' + options.port : '',
-            options.path
-        ].join('');
-        var ctx = this;
-        request(url, function(error, response, body) {
-            if(body === 'true') {
-                eventEmitter.emit('tram', ctx);
-            }
-        });
-    };
 
     /**
      * Обработчик события 'tram'
@@ -48,14 +47,17 @@ TramHandler = function(trafic, options, eventEmitter) {
      * @param {TramHandler} ctx
      */
     eventEmitter.on('tram', function(ctx) {
-        if(ctx._checkerId) { clearInterval(ctx._checkerId); }
+        if (ctx._checkerId) {
+            clearInterval(ctx._checkerId);
+        }
         var currentTime = new Date();
         var previousColor = trafic.state();
-        var restTime = trafic.current.timeout - (currentTime - trafic.current.startTime);
+        var restTime = trafic.current.timeout -
+            (currentTime - trafic.current.startTime);
         var tramTime = trafic.getConfig().timeout.tram;
 
         setTimeout(function() {
-            trafic.switch('Green', tramTime.passage );
+            trafic.switch('Green', tramTime.passage);
         }, tramTime.arrival);
 
         eventEmitter.emit('restore', previousColor, restTime, ctx);
@@ -72,15 +74,15 @@ TramHandler = function(trafic, options, eventEmitter) {
      * @param {number} percent
      */
     eventEmitter.on('restore', function(color, restTime, ctx, percent) {
-        var tramTime = trafic.getConfig().timeout.tram,
-            tramTimeAll = tramTime.arrival + tramTime.passage;
+        var tramTime = trafic.getConfig().timeout.tram;
+        var tramTimeAll = tramTime.arrival + tramTime.passage;
 
         setTimeout(function() {
             var traficConfig = trafic.getConfig();
-            var timeout = traficConfig.timeout[ color.toLowerCase() ];
+            var timeout = traficConfig.timeout[color.toLowerCase()];
             var controlTime = ((timeout / 100) * (percent || 25));
 
-            if(restTime > controlTime) {
+            if (restTime > controlTime) {
                 trafic.switch(color, restTime);
             } else {
                 trafic.current.color = color;
@@ -88,7 +90,7 @@ TramHandler = function(trafic, options, eventEmitter) {
             }
 
             ctx.tramChecker();
-        }.bind(this), tramTimeAll);
+        }, tramTimeAll);
     });
 };
 

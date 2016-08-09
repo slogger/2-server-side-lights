@@ -1,0 +1,8 @@
+deploy:
+  provider: heroku
+  api_key:
+    secure: owvJWtgkdAiKeBkzle4bfLel64fsYrlVNnItfzXHk6/wC53Zn7JOAjDsvR8dZzEMt0aJGwjpsVCTzKUXE+3YoQrUIjMCrhqyYM5bBXEJsomVcjLAMrUtNfyIqbHLfPzomN/ShKMOptyWMrpuoo73vK+FpCjH+y7bFvVy6p+XjIZ7j+JfbJ+3CIQELJLdQD0KDj6al4xxx+EaKKv535W7B36xWdNAWEXkqSl/nsgTnEa2sV1a3tbWGaUW8CKuEpV/5WBW7icERi0fN6dWE6CJidg1Aj6uOSx8619UKlvx+KEKaGR27PGmtQP2vN6iix8Y2+QBVSB0a/p8fiZPiG0RRb9t04l8NJCV7H26sbPFF44284/R0wiBTrbcbjXH4RZuuNeBnwMR+mdDHtRnmBo3If32ga9i5w8d5fpipJXU07W/5bX0dDX7t/V1PlyOcLyGjIc/+InS4HsBYTK+8T7ncbWDEQ6gXvtYs7DnipwQKxZs2bf0hkC/lKiPm2bchAJgXa8ioZbmTd8+8lKw/6on1Rc3ZOA9M9MX7flcPfL64Gpg82TU2YByI60IuigwNo2gEPfYYCJnSqJ3n36Y7hq9LgQIJe0kG2mj6JiG4Xo1ICfRdoPOrusgFieGr1MuV1x4vM138/IcGbnJdzos0ShTBu7tQPuh/AapuRBo5mnh3LA=
+  app: safe-hollows-82457
+  on:
+    repo: slogger/2-server-side-lights
+    branch: task

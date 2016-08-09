@@ -7,13 +7,24 @@
     "type": "git",
     "url": "git://github.com/slogger/1-lights.git"
   },
+  "scripts": {
+    "test": "eslint *.js www/*.js",
+    "start": "node server.js",
+    "heroku-prebuild": "node -v"
+  },
   "bugs": {
     "url": "https://github.com/slogger/1-lights/issues"
   },
   "dependencies": {
     "express": "^4.9.6",
-    "jscs": "~1.6.2",
-    "jshint": "~2.5.6",
     "request": "^2.45.0"
+  },
+  "devDependencies": {
+    "stylelint": "^7.1.0",
+    "stylelint-config-primer": "^1.1.0",
+    "eslint": "^3.2.2",
+    "eslint-config-google": "^0.6.0",
+    "eslint-plugin-react": "^6.0.0",
+    "stylelint-config-standard": "^12.0.0"
   }
 }
