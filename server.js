@@ -3,8 +3,15 @@ var tramHandler = require('./TramHandler.js');
 var events = require('events');
 var eventEmitter = new events.EventEmitter();
 var express = require('express');
+var bunyan = require('bunyan');
 var app = express();
+
 var PORT = process.env.PORT || 3000;
+
+var log = bunyan.createLogger({
+    name: 'trafic'
+});
+
 var config = {
     timeout: {
         green: 3000,
@@ -39,14 +46,17 @@ trafic.run();
 app.use(express.static(__dirname + '/www')); // eslint-disable-line
 
 app.get('/', function(req, res) {
+    log.info('NEW REQUEST');
     res.sendFile('www/index.html');
 });
 
 app.get('/state', function(req, res) {
-    res.json({
+    var state = {
         state: trafic.state(),
         lasttime: trafic.lastTime()
-    });
+    };
+    log.info('state:', state);
+    res.json(state);
 });
 
 app.get('/tramIsComing', function(req, res) {
@@ -55,14 +65,16 @@ app.get('/tramIsComing', function(req, res) {
 
 // Запускаем сервер
 var server = app.listen(PORT, function() {
-    console.log('Listening on port %d', server.address().port);
+    log.info(`Listening on port ${server.address().port}`);
 });
 
 // Каждые 'tramInterval' мсек запускаем трамвай
 setInterval(function() {
+    log.info('tram');
     tramStatus = true;
 }, tramInterval);
 
 eventEmitter.on('restore', function() {
+    log.info('restore after tram');
     tramStatus = !tramStatus;
 });
