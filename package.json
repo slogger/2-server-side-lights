@@ -8,7 +8,7 @@
     "url": "git://github.com/slogger/1-lights.git"
   },
   "scripts": {
-    "test": "eslint *.js www/*.js",
+    "test": "eslint *.js www/*.js && istanbul cover node_modules/.bin/_mocha test/**/*.test.js --report html",
     "start": "node server.js",
     "heroku-prebuild": "node -v"
   },
@@ -20,11 +20,14 @@
     "request": "^2.45.0"
   },
   "devDependencies": {
-    "stylelint": "^7.1.0",
-    "stylelint-config-primer": "^1.1.0",
+    "chai": "^3.5.0",
     "eslint": "^3.2.2",
     "eslint-config-google": "^0.6.0",
     "eslint-plugin-react": "^6.0.0",
+    "istanbul": "^0.4.4",
+    "mocha": "^3.0.2",
+    "stylelint": "^7.1.0",
+    "stylelint-config-primer": "^1.1.0",
     "stylelint-config-standard": "^12.0.0"
   }
 }
