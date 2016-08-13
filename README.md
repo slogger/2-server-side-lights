@@ -2,6 +2,7 @@
 
 [![bitHound Overall Score](https://www.bithound.io/github/slogger/2-server-side-lights/badges/score.svg)](https://www.bithound.io/github/slogger/2-server-side-lights)
 [![Build Status](https://travis-ci.org/slogger/2-server-side-lights.svg?branch=task)](https://travis-ci.org/slogger/2-server-side-lights)
+[![codecov](https://codecov.io/gh/slogger/2-server-side-lights/branch/task/graph/badge.svg)](https://codecov.io/gh/slogger/2-server-side-lights)
 
 ## Первое задание «Светофор»
 Напишите работу движения трамвая на сервере. Оформите это в виде сервиса, который по запросу светофора (раз в n секунд) отвечает приближается трамвай или нет.
