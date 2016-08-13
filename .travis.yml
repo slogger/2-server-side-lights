@@ -9,3 +9,5 @@ deploy:
   on:
     repo: slogger/2-server-side-lights
     branch: task
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
